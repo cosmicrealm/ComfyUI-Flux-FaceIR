@@ -1,0 +1,105 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "FLUX.2-klein-base-4B/flux-2-klein-base-4b.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader"
+  },
+  "2": {
+    "inputs": {
+      "clip_name": "qwen_3_4b.safetensors",
+      "type": "flux2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader"
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader"
+  },
+  "4": {
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "lora_name": "lora_weights.safetensors"
+    },
+    "class_type": "FluxFaceIRApplyLoRA"
+  },
+  "5": {
+    "inputs": {
+      "image": "aligned_face.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "6": {
+    "inputs": {
+      "image": "reference_1.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "7": {
+    "inputs": {
+      "image": "reference_2.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "8": {
+    "inputs": {
+      "image": "reference_3.png"
+    },
+    "class_type": "LoadImage"
+  },
+  "9": {
+    "inputs": {
+      "faceir_model": [
+        "4",
+        0
+      ],
+      "face_image": [
+        "5",
+        0
+      ],
+      "clip": [
+        "2",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ],
+      "prompt": "restore a high quality portrait photo of a person, natural skin, detailed face",
+      "resolution": 512,
+      "num_steps": 50,
+      "guidance_scale": 4.0,
+      "seed": 42,
+      "reference_image_1": [
+        "6",
+        0
+      ],
+      "reference_image_2": [
+        "7",
+        0
+      ],
+      "reference_image_3": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "FluxFaceIRRestoreFace"
+  },
+  "10": {
+    "inputs": {
+      "filename_prefix": "flux_faceir/restored_face",
+      "images": [
+        "9",
+        0
+      ]
+    },
+    "class_type": "SaveImage"
+  }
+}

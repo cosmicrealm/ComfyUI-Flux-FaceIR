@@ -1,0 +1,7 @@
+[project]
+name = "comfyui-flux-faceir"
+version = "0.1.0"
+description = "ComfyUI extension for FLUX FaceIR face restoration."
+readme = "README.md"
+requires-python = ">=3.10"
+

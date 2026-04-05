@@ -1,0 +1,8 @@
+torch>=2.1
+torchvision>=0.16
+transformers>=4.39
+safetensors>=0.4
+einops>=0.7
+Pillow>=10
+huggingface_hub>=0.24
+tqdm>=4.66
