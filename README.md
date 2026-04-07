@@ -4,7 +4,7 @@ Main repository: [cosmicrealm/flux-restoration](https://github.com/cosmicrealm/f
 
 LoRA weights: [lora_weights.safetensors](https://huggingface.co/zhangjinyang/flux-restoration/blob/main/pretrained_models/lora_weights.safetensors)
 
-Base DiT: [flux-2-klein-base-4b-fp8.safetensors](https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4b-fp8/resolve/main/flux-2-klein-base-4b-fp8.safetensors)  
+Base DiT: [flux-2-klein-base-4b.safetensors](https://huggingface.co/black-forest-labs/FLUX.2-klein-base-4B/blob/main/flux-2-klein-base-4b.safetensors)  
 
 Text encoder: [qwen_3_4b.safetensors](https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors)  
 
@@ -36,7 +36,8 @@ Recommended ComfyUI model layout:
 ```text
 ComfyUI/models/
   diffusion_models/
-    flux-2-klein-base-4b-fp8.safetensors
+    FLUX.2-klein-base-4B/
+      flux-2-klein-base-4b.safetensors
   text_encoders/
     qwen_3_4b.safetensors
   vae/
@@ -67,7 +68,7 @@ Recommended graph:
 
 The included example workflow assumes:
 
-- `UNETLoader`: `flux-2-klein-base-4b-fp8.safetensors`
+- `UNETLoader`: `FLUX.2-klein-base-4B/flux-2-klein-base-4b.safetensors`
 - `CLIPLoader`: `qwen_3_4b.safetensors`
 - `VAELoader`: `flux2-vae.safetensors`
 - `Flux FaceIR Apply LoRA`: `lora_weights.safetensors`
@@ -76,4 +77,5 @@ The included example workflow assumes:
 
 - This extension does not download model weights for you.
 - Base model loading follows standard ComfyUI loaders.
+- The bundled workflow targets the non-quantized `flux-2-klein-base-4b.safetensors` checkpoint, not the FP8 variant.
 - The restore node accepts blind restoration or reference-guided restoration with up to three references.
