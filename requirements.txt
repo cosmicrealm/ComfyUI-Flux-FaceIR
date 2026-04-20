@@ -4,5 +4,6 @@ transformers>=4.39
 safetensors>=0.4
 einops>=0.7
 Pillow>=10
+opencv-python>=4.8
 huggingface_hub>=0.24
 tqdm>=4.66

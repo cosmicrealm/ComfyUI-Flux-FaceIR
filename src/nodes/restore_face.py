@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import nodes as comfy_nodes
 import torch
 
 from ..flux_faceir.runtime import restore_face
@@ -70,4 +71,6 @@ class FluxFaceIRRestoreFace:
                 reference_image=reference_batch,
             )
             outputs.append(pil_to_comfy_image(restored)[0])
-        return (torch.stack(outputs, dim=0),)
+        restored_batch = torch.stack(outputs, dim=0)
+        preview = comfy_nodes.PreviewImage().save_images(restored_batch, "flux_faceir_restore_preview")
+        return {"ui": preview.get("ui", {}), "result": (restored_batch,)}

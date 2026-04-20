@@ -1,0 +1,923 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "revision": 0,
+  "last_node_id": 18,
+  "last_link_id": 21,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        560
+      ],
+      "size": [
+        520,
+        420
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6,
+            8
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "4.png",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        1430
+      ],
+      "size": [
+        340,
+        360
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "6.png",
+        "image"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "FluxFaceIRDetectAlignFace",
+      "pos": [
+        420,
+        1450
+      ],
+      "size": [
+        340,
+        320
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "retinaface_model",
+          "type": "RETINAFACE_MODEL",
+          "link": 17
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "aligned_face",
+          "type": "IMAGE",
+          "links": [
+            18,
+            19
+          ]
+        },
+        {
+          "name": "align_params",
+          "type": "FACEIR_ALIGN_PARAMS",
+          "links": null
+        },
+        {
+          "name": "align_params_json",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRDetectAlignFace"
+      },
+      "widgets_values": [
+        "largest",
+        512,
+        1,
+        0,
+        0.6,
+        5000,
+        0.4,
+        750,
+        640,
+        "constant"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "SaveImage",
+      "pos": [
+        800,
+        1060
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 15
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "flux_faceir/aligned_reference_face_1"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "SaveImage",
+      "pos": [
+        800,
+        1450
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "flux_faceir/aligned_reference_face_2"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "SaveImage",
+      "pos": [
+        1450,
+        560
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "flux_faceir/restored_face"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "SaveImage",
+      "pos": [
+        953.321533203125,
+        606.7431640625
+      ],
+      "size": [
+        320,
+        320
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 11
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "flux_faceir/aligned_degraded_face"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "FluxFaceIRRestoreFace",
+      "pos": [
+        968.641357421875,
+        12.532958984375
+      ],
+      "size": [
+        430,
+        536
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "faceir_model",
+          "type": "FACEIR_MODEL",
+          "link": 2
+        },
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 3
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 4
+        },
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "reference_image_1",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 14
+        },
+        {
+          "name": "reference_image_2",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": 18
+        },
+        {
+          "name": "reference_image_3",
+          "shape": 7,
+          "type": "IMAGE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "restored_face",
+          "type": "IMAGE",
+          "links": [
+            10,
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRRestoreFace"
+      },
+      "widgets_values": [
+        "restore a high quality portrait photo of a person, natural skin, detailed face",
+        512,
+        20,
+        4,
+        1792136597,
+        "randomize"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "FluxFaceIRLoadRetinaFace",
+      "pos": [
+        476.845703125,
+        328.084716796875
+      ],
+      "size": [
+        304.571533203125,
+        149.2509765625
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "retinaface_model",
+          "type": "RETINAFACE_MODEL",
+          "links": [
+            5,
+            13,
+            17
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRLoadRetinaFace"
+      },
+      "widgets_values": [
+        "retinaface_r34.pth",
+        "resnet34",
+        "auto",
+        ""
+      ]
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "pos": [
+        163.895263671875,
+        246.334228515625
+      ],
+      "size": [
+        280,
+        106
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen_3_4b.safetensors",
+        "flux2",
+        "default"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "pos": [
+        140.653076171875,
+        411.5673828125
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "flux2-vae.safetensors"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "FluxFaceIRApplyLoRA",
+      "pos": [
+        630.941162109375,
+        33.5107421875
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FACEIR_MODEL",
+          "type": "FACEIR_MODEL",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRApplyLoRA"
+      },
+      "widgets_values": [
+        "lora_weights.safetensors"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "UNETLoader",
+      "pos": [
+        240.689697265625,
+        75.52734375
+      ],
+      "size": [
+        280,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "FLUX.2-klein-base-4B/flux-2-klein-base-4b.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "FluxFaceIRDetectAlignFace",
+      "pos": [
+        420,
+        1060
+      ],
+      "size": [
+        340,
+        320
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "retinaface_model",
+          "type": "RETINAFACE_MODEL",
+          "link": 13
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "aligned_face",
+          "type": "IMAGE",
+          "links": [
+            14,
+            15
+          ]
+        },
+        {
+          "name": "align_params",
+          "type": "FACEIR_ALIGN_PARAMS",
+          "links": null
+        },
+        {
+          "name": "align_params_json",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRDetectAlignFace"
+      },
+      "widgets_values": [
+        "largest",
+        512,
+        1,
+        0,
+        0.6,
+        5000,
+        0.4,
+        750,
+        640,
+        "constant"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        35.78857421875,
+        1031.064453125
+      ],
+      "size": [
+        340,
+        360
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            12
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "1.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 18,
+      "type": "SaveImage",
+      "pos": [
+        1182.491455078125,
+        1028.087158203125
+      ],
+      "size": [
+        535.03662109375,
+        713.671875
+      ],
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 21
+        }
+      ],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "flux_faceir/restored_full_image"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "FluxFaceIRDetectAlignFace",
+      "pos": [
+        590.8203125,
+        592.557373046875
+      ],
+      "size": [
+        340,
+        320
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "retinaface_model",
+          "type": "RETINAFACE_MODEL",
+          "link": 5
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "aligned_face",
+          "type": "IMAGE",
+          "links": [
+            7,
+            11
+          ]
+        },
+        {
+          "name": "align_params",
+          "type": "FACEIR_ALIGN_PARAMS",
+          "links": [
+            9
+          ]
+        },
+        {
+          "name": "align_params_json",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRDetectAlignFace"
+      },
+      "widgets_values": [
+        "largest",
+        512,
+        1.5,
+        0,
+        0.6,
+        5000,
+        0.4,
+        750,
+        640,
+        "constant"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "FluxFaceIRPasteBackFace",
+      "pos": [
+        1450,
+        180
+      ],
+      "size": [
+        340,
+        320
+      ],
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 8
+        },
+        {
+          "name": "restored_face",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "align_params",
+          "type": "FACEIR_ALIGN_PARAMS",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "restored_image",
+          "type": "IMAGE",
+          "links": [
+            21
+          ]
+        },
+        {
+          "name": "paste_mask",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FluxFaceIRPasteBackFace"
+      },
+      "widgets_values": [
+        0.5
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      4,
+      0,
+      12,
+      0,
+      "FACEIR_MODEL"
+    ],
+    [
+      3,
+      2,
+      0,
+      12,
+      1,
+      "CLIP"
+    ],
+    [
+      4,
+      3,
+      0,
+      12,
+      2,
+      "VAE"
+    ],
+    [
+      5,
+      5,
+      0,
+      7,
+      0,
+      "RETINAFACE_MODEL"
+    ],
+    [
+      6,
+      6,
+      0,
+      7,
+      1,
+      "IMAGE"
+    ],
+    [
+      7,
+      7,
+      0,
+      12,
+      3,
+      "IMAGE"
+    ],
+    [
+      8,
+      6,
+      0,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      9,
+      7,
+      1,
+      13,
+      2,
+      "FACEIR_ALIGN_PARAMS"
+    ],
+    [
+      10,
+      12,
+      0,
+      13,
+      1,
+      "IMAGE"
+    ],
+    [
+      11,
+      7,
+      0,
+      14,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      8,
+      0,
+      9,
+      1,
+      "IMAGE"
+    ],
+    [
+      13,
+      5,
+      0,
+      9,
+      0,
+      "RETINAFACE_MODEL"
+    ],
+    [
+      14,
+      9,
+      0,
+      12,
+      4,
+      "IMAGE"
+    ],
+    [
+      15,
+      9,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      16,
+      10,
+      0,
+      11,
+      1,
+      "IMAGE"
+    ],
+    [
+      17,
+      5,
+      0,
+      11,
+      0,
+      "RETINAFACE_MODEL"
+    ],
+    [
+      18,
+      11,
+      0,
+      12,
+      5,
+      "IMAGE"
+    ],
+    [
+      19,
+      11,
+      0,
+      16,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      12,
+      0,
+      17,
+      0,
+      "IMAGE"
+    ],
+    [
+      21,
+      13,
+      0,
+      18,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.64,
+      "offset": [
+        901.094970703125,
+        123.607177734375
+      ]
+    },
+    "frontendVersion": "1.42.8"
+  },
+  "version": 0.4
+}
