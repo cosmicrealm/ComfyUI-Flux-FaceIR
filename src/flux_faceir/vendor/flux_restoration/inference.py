@@ -225,7 +225,7 @@ def sample_image_comfy(
 
     transformer_options: dict = {}
 
-    with temporary_lora(diffusion_model, lora_path, target_patterns="flux2_klein"):
+    with temporary_lora(diffusion_model, lora_path, target_patterns="flux2_klein", device=device):
         total_steps = len(schedule) - 1
         for step_index, (t_curr, t_next) in enumerate(zip(schedule[:-1], schedule[1:]), start=1):
             dt = t_next - t_curr

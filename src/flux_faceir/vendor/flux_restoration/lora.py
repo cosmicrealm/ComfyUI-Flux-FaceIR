@@ -105,16 +105,27 @@ class LoRALinear(nn.Module):
     def lora_delta(self) -> torch.Tensor:
         return (self.lora_B @ self.lora_A) * self.scaling
 
+    def move_lora_(self, *, device: torch.device | str | None = None, dtype: torch.dtype | None = None) -> None:
+        if device is None and dtype is None:
+            return
+        self.lora_A.data = self.lora_A.data.to(device=device, dtype=dtype or self.lora_A.dtype)
+        self.lora_B.data = self.lora_B.data.to(device=device, dtype=dtype or self.lora_B.dtype)
+
     def merge_(self) -> nn.Linear:
-        delta = self.lora_delta().to(self.base_layer.weight.dtype)
+        delta = self.lora_delta().to(device=self.base_layer.weight.device, dtype=self.base_layer.weight.dtype)
         self.base_layer.weight.data.add_(delta)
         return self.base_layer
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         base = self.base_layer(x)
-        update = F.linear(self.dropout(x).to(dtype=self.lora_A.dtype), self.lora_A)
-        update = F.linear(update, self.lora_B) * self.scaling * self.runtime_scale
-        return base + update.to(dtype=base.dtype)
+        lora_A = self.lora_A
+        lora_B = self.lora_B
+        if lora_A.device != x.device:
+            lora_A = lora_A.to(device=x.device)
+            lora_B = lora_B.to(device=x.device)
+        update = F.linear(self.dropout(x).to(device=lora_A.device, dtype=lora_A.dtype), lora_A)
+        update = F.linear(update, lora_B) * self.scaling * self.runtime_scale
+        return base + update.to(device=base.device, dtype=base.dtype)
 
 
 def _normalize_module_name(module_name: str) -> str:
@@ -321,6 +332,7 @@ def temporary_lora(
     alpha: float = 16.0,
     dropout: float = 0.0,
     target_patterns: str | list[str] = "flux2_klein",
+    device: torch.device | str | None = None,
 ):
     if lora_path is None or str(lora_path).strip() == "":
         yield model
@@ -344,6 +356,7 @@ def temporary_lora(
             parent, child_name = _resolve_parent(model, module_name)
             original = _get_child_module(parent, child_name)
             wrapped = LoRALinear(original, rank=rank, alpha=alpha, dropout=dropout)
+            wrapped.move_lora_(device=device)
             _set_child_module(parent, child_name, wrapped)
             replaced.append((parent, child_name, original))
 
