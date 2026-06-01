@@ -42,18 +42,20 @@ Whole-image workflow:
 
 ## Installation
 
-Copy this directory into `ComfyUI/custom_nodes`, then install dependencies:
+Clone this repository into `ComfyUI/custom_nodes`, then install dependencies:
 
 ```bash
-cd ComfyUI/custom_nodes
-cp -R /path/to/flux-restoration/release/ComfyUI-Flux-FaceIR ./ComfyUI-Flux-FaceIR
+cd /path/to/ComfyUI/custom_nodes
+git clone https://github.com/cosmicrealm/ComfyUI-Flux-FaceIR.git
 cd ComfyUI-Flux-FaceIR
 python install.py
 ```
 
-Restart ComfyUI after installation.
+Restart ComfyUI after installation (stop the server process, then start again).
 
-If you already have this repository locally, you only need to copy `release/ComfyUI-Flux-FaceIR` into `ComfyUI/custom_nodes`.
+> **Note:** This extension is **not** inside the [flux-restoration](https://github.com/cosmicrealm/flux-restoration) repo. Older docs that mention `flux-restoration/release/ComfyUI-Flux-FaceIR` are outdated — use the `git clone` command above.
+
+If workflows report missing nodes such as `FluxFaceIRApplyLoRA`, see [flux-restoration/docs/COMFYUI.md](https://github.com/cosmicrealm/flux-restoration/blob/main/docs/COMFYUI.md).
 
 ## Required Models
 
