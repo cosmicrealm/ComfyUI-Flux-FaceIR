@@ -118,7 +118,9 @@ class FluxFaceIRDetectAlignFace:
                 raise ValueError(
                     f"No face detected in batch item {index} with image size {width}x{height}. "
                     f"Tried {attempt_summary}. "
-                    "If this is the bundled example workflow, replace the default example image with a real face photo."
+                    "Please ensure the image contains a clear, visible face. "
+                    "You can also try lowering conf_threshold, increasing resize_short_edge, "
+                    "or using a different image."
                 )
             selected = select_face_detection(detections, face_selection, source_image.shape)
             aligned_image, params = align_face(
